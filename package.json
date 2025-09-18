@@ -101,6 +101,46 @@
       "optional": true
     }
   },
+  "bundledDependencies": [
+    "@codemirror/commands",
+    "@codemirror/lang-javascript",
+    "@codemirror/language",
+    "@codemirror/state",
+    "@codemirror/theme-one-dark",
+    "@codemirror/view",
+    "@fastify/busboy",
+    "@json2csv/plainjs",
+    "@lezer/highlight",
+    "@popperjs/core",
+    "basic-auth-connect",
+    "body-parser",
+    "bootstrap",
+    "bootstrap-paginator-2",
+    "bson",
+    "codemirror",
+    "commander",
+    "cookie-parser",
+    "cross-env",
+    "csurf",
+    "dotenv",
+    "errorhandler",
+    "express",
+    "express-fileupload",
+    "express-session",
+    "flat",
+    "free-swig",
+    "gridfs-stream",
+    "html-entities",
+    "jquery",
+    "memorystore",
+    "method-override",
+    "mongodb",
+    "mongodb-query-parser",
+    "morgan",
+    "picocolors",
+    "renderjson-2",
+    "serve-favicon"
+  ],
   "engines": {
     "node": ">=18.18"
   },
@@ -124,6 +164,8 @@
     "config.default.js",
     "lib",
     "public",
-    "webpack.config.js"
+    "webpack.config.js",
+    "build-assets.json",
+    "build"
   ]
 }
