@@ -24,12 +24,12 @@
   <a class="nav-link px-1" href="{{ dbUrl }}">Database:</a>
 </li>
 <li class="nav-item dropdown">
-  <a class="nav-link dropdown-toggle px-1" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+  <a class="nav-link dropdown-toggle px-1" href="#" role="button" aria-controls="navbarDatabaseDropdown" data-bs-target="#navbarDatabaseDropdown" data-bs-toggle="dropdown" aria-expanded="false">
     {{ dbName }}
   </a>
-  <ul class="dropdown-menu">
+  <ul id="navbarDatabaseDropdown" class="dropdown-menu scrollable-ul">
     {% for db in databases %}
-    <a class="dropdown-item" href="{{ baseHref }}db/{{ db | url_encode }}/">{{ db }}</a>
+    <li><a class="dropdown-item" href="{{ baseHref }}db/{{ db | url_encode }}/">{{ db }}</a></li>
     {% endfor %}
   </ul>
 </li>
@@ -37,12 +37,12 @@
   <a class="nav-link px-1" href="{{ collectionUrl }}">Collection:</a>
 </li>
 <li class="nav-item dropdown">
-  <a class="nav-link dropdown-toggle px-1" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+  <a class="nav-link dropdown-toggle px-1" href="#" role="button" aria-controls="navbarCollectionDropdown" data-bs-target="#navbarCollectionDropdown" data-bs-toggle="dropdown" aria-expanded="false">
     {{ collectionName }}
   </a>
-  <ul class="dropdown-menu">
+  <ul id="navbarCollectionDropdown" class="dropdown-menu scrollable-ul">
     {% for collection in collections %}
-    <a class="dropdown-item" href="{{ dbUrl }}/{{ collection | url_encode }}">{{ collection }}</a>
+    <li><a class="dropdown-item" href="{{ dbUrl }}/{{ collection | url_encode }}">{{ collection }}</a></li>
     {% endfor %}
   </ul>
 </li>
@@ -83,7 +83,10 @@
           Save
         </button>
       {% else %}
-        <button onclick="return history.back()" class="btn btn-warning btn-large btn-block">
+        {# type="button" matters: this sits inside the POST form, and a button without it
+   defaults to submit. history.back() returns undefined, which does not cancel the
+   submission, so the page both navigated back and posted the form. #}
+        <button type="button" onclick="history.back()" class="btn btn-warning btn-large btn-block">
           <i class="fa fa-arrow-left"></i>
           Back
         </button>
@@ -108,7 +111,10 @@
         Save
       </button>
     {% else %}
-      <button onclick="return history.back()" class="btn btn-warning btn-large btn-block">
+      {# type="button" matters: this sits inside the POST form, and a button without it
+   defaults to submit. history.back() returns undefined, which does not cancel the
+   submission, so the page both navigated back and posted the form. #}
+        <button type="button" onclick="history.back()" class="btn btn-warning btn-large btn-block">
         <i class="fa fa-arrow-left"></i>
         Back
       </button>

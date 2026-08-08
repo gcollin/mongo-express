@@ -1,7 +1,5 @@
+import 'dotenv/config.js';
 import fs from 'node:fs';
-import * as dotenv from 'dotenv';
-
-dotenv.config();
 
 function getBoolean(str, defaultValue = false) {
   return str ? str.toLowerCase() === 'true' : defaultValue;
@@ -26,7 +24,7 @@ function getFileEnv(envVariable) {
   if (fileVar) {
     const file = getFile(fileVar);
     if (file) {
-      return file.toString().split(/\r?\n/)[0].trim();
+      return file.toString().split(/\r?\n/, 1)[0].trim();
     }
   }
   return origVar;
@@ -83,14 +81,14 @@ export default {
       // tlsCAFile: single PEM file on disk
       tlsCAFile: process.env.ME_CONFIG_MONGODB_TLS_CA_FILE,
 
-      // tlsCertificateFile: client certificate PEM file on disk
-      tlsCertificateFile: process.env.ME_CONFIG_MONGODB_TLS_CERT_FILE,
-
-      // tlsCertificateKeyFile: client key PEM file on disk
+      // tlsCertificateKeyFile: client cert+key PEM file on disk
       tlsCertificateKeyFile: process.env.ME_CONFIG_MONGODB_TLS_CERT_KEY_FILE,
 
       // tlsCertificateKeyFilePassword: password for the client key PEM
       tlsCertificateKeyFilePassword: process.env.ME_CONFIG_MONGODB_TLS_CERT_KEY_FILE_PASSWORD,
+
+      // tlsCRLFile: certificate revocation list, so revoked server certs are rejected
+      tlsCRLFile: process.env.ME_CONFIG_MONGODB_TLS_CRL_FILE,
 
       // maxPoolSize: size of connection pool (number of connections to use)
       maxPoolSize: 4,
@@ -129,6 +127,15 @@ export default {
     // path: the Path that mongo express healthcheck will be serve - Remember to add the forward slash at the start!
     path: process.env.ME_CONFIG_HEALTH_CHECK_PATH || '/status',
   },
+
+  // authStrategy: how visitors authenticate to mongo-express itself.
+  //   'basic' - HTTP Basic Auth, the browser's own prompt
+  //   'form'  - a sign-in page, which password managers can store and fill
+  //   'oidc'  - OpenID Connect
+  // Left unset it follows useBasicAuth / useOidcAuth below. There is no 'off' value on
+  // purpose: authentication is disabled by not configuring it, so a typo here cannot
+  // silently expose an instance.
+  authStrategy: process.env.ME_CONFIG_AUTH_STRATEGY,
 
   // set useBasicAuth to true if you want to authenticate mongo-express logins
   // this will be false unless ME_CONFIG_BASICAUTH_ENABLED is set to the true
@@ -208,5 +215,7 @@ export default {
 
     // noDelete: if noDelete is set to true, we won't show delete buttons
     noDelete: getBoolean(process.env.ME_CONFIG_OPTIONS_NO_DELETE, false),
+
+    noRawCommand: getBoolean(process.env.ME_CONFIG_OPTIONS_NO_RAW_COMMAND, false),
   },
 };
