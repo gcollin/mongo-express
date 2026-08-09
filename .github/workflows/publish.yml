@@ -29,6 +29,8 @@ jobs:
         run: yarn install --frozen-lockfile
       - name: Build release
         run: yarn build
+      - name: Pack release
+        run: npm pack
       - name: Release
         uses: softprops/action-gh-release@v3
         with:
