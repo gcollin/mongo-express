@@ -112,3 +112,4 @@ cypress/screenshots
 
 config.js
 .env
+mongo-express-*.tgz
